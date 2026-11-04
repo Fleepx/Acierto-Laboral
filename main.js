@@ -32,9 +32,15 @@
       .filter((entry) => entry.isIntersecting)
       .sort((x, y) => order.get(x.target) - order.get(y.target))
       .forEach((entry, n) => {
-        entry.target.style.transitionDelay = `${n * 120}ms`;
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
+        const el = entry.target;
+        const delay = n * 120;
+        el.style.transitionDelay = `${delay}ms`;
+        el.classList.add('is-visible');
+        revealObserver.unobserve(el);
+        setTimeout(() => {
+          el.classList.remove('reveal');
+          el.style.transitionDelay = '';
+        }, delay + 1000);
       });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
   reveals.forEach((el) => revealObserver.observe(el));
