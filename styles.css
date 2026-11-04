@@ -212,12 +212,42 @@ p { text-wrap: pretty; }
 .report-dots span.on { width: 24px; background: var(--navy-800); }
 .report-sign { font-size: 0.75rem; line-height: 1rem; color: var(--ink-3); }
 
-/* Clients strip */
-.clients { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper); }
-.clients-row { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding-top: 24px; padding-bottom: 24px; flex-wrap: wrap; }
-.clients-row p { font-size: 0.875rem; line-height: 1.25rem; color: var(--ink-3); font-weight: 500; }
-.clients-row ul { display: flex; gap: 48px; flex-wrap: wrap; }
-.clients-row li { font-size: 1.125rem; line-height: 1.75rem; font-weight: 700; color: var(--navy-700); letter-spacing: -0.01em; opacity: 0.8; }
+/* Clients */
+.clients { position: relative; overflow: hidden; padding: 96px 0; background: var(--navy-800); color: #fff; }
+.clients-ring { position: absolute; width: 520px; height: 520px; left: -200px; bottom: -240px; color: var(--red); opacity: 0.9; pointer-events: none; }
+.clients .container { position: relative; }
+.clients-head { display: flex; flex-direction: column; gap: 16px; max-width: 680px; margin-bottom: 64px; }
+.clients-head .eyebrow { color: #9DB6EA; }
+.clients-head h2 { font-size: 3rem; line-height: 1; letter-spacing: -0.03em; color: #fff; }
+.clients-lead { font-size: 1.125rem; line-height: 1.75rem; color: #B4C1DE; }
+.client-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.client a {
+  position: relative; display: flex; flex-direction: column; gap: 24px; height: 100%;
+  padding: 24px; border-radius: 24px; background: #fff; color: var(--ink); text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.7s var(--ease), box-shadow 0.7s var(--ease), border-color 0.7s var(--ease);
+}
+.client a:hover { transform: translateY(-8px); box-shadow: 0 40px 64px -32px rgba(0, 0, 0, 0.55); border-color: #CFD8EC; }
+.client a:active { transform: translateY(-4px) scale(0.98); }
+.client a:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 24px; }
+.client-logo { display: grid; place-items: center; height: 160px; border-radius: 16px; background: var(--paper-2); overflow: hidden; }
+.client-logo img {
+  height: var(--h); width: auto; max-width: 80%;
+  filter: grayscale(1); opacity: 0.45; transform: scale(0.92);
+  transition: filter 1.2s var(--ease), opacity 1.2s var(--ease), transform 1.2s var(--ease);
+}
+.client.is-visible .client-logo img { filter: none; opacity: 1; transform: none; transition-delay: inherit; }
+.client a:hover .client-logo img { transform: scale(1.06); }
+.client-meta { display: flex; flex-direction: column; gap: 4px; padding-right: 48px; }
+.client-sector { font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: var(--ink-3); }
+.client-meta strong { font-size: 1.25rem; line-height: 1.75rem; color: var(--navy-800); letter-spacing: -0.01em; }
+.client-go {
+  position: absolute; right: 24px; bottom: 24px;
+  width: 40px; height: 40px; display: grid; place-items: center; border-radius: 9999px;
+  background: var(--blue-soft); color: var(--blue); font-size: 1.125rem;
+  transition: transform 0.7s var(--ease), background-color 0.7s var(--ease), color 0.7s var(--ease);
+}
+.client a:hover .client-go { background: var(--red); color: #fff; transform: translate(2px, -2px) rotate(0deg); }
 
 /* Sections */
 .section { padding: 96px 0; }
@@ -403,8 +433,13 @@ p { text-wrap: pretty; }
   .statement { padding: 96px 0; }
   .statement-text { font-size: 2.25rem; line-height: 2.5rem; }
   .field-row { grid-template-columns: 1fr; }
-  .clients-row { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .clients-row ul { gap: 24px; }
+  .clients { padding: 80px 0; }
+  .clients-head { margin-bottom: 40px; }
+  .clients-head h2 { font-size: 2.25rem; line-height: 2.5rem; }
+  .clients-head h2 br { display: none; }
+  .clients-ring { width: 240px; height: 240px; left: auto; right: -140px; bottom: auto; top: -120px; }
+  .client-logo { height: 128px; }
+  .client-grid { grid-template-columns: 1fr; gap: 16px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .section-head h2 br, .about-copy h2 br, .contact-copy h2 br { display: none; }
 }

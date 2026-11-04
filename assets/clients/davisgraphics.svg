@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 308 106" role="img" aria-label="Davis Graphics">
+  <rect x="2" y="2" width="304" height="102" fill="#fff" stroke="#053994" stroke-width="4"/>
+  <rect x="2" y="2" width="132" height="102" fill="#053994"/>
+  <text x="68" y="68" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#fff">Davis</text>
+  <text x="220" y="68" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="42" fill="#053994">graphics</text>
+</svg>
