@@ -206,12 +206,12 @@
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const messages = {
-    name: 'Ingrese su nombre.',
-    company: 'Ingrese el nombre de su empresa.',
-    email: 'Ingrese un correo válido, por ejemplo nombre@empresa.cl.',
-    phone: 'Ingrese un teléfono válido.',
-    service: 'Seleccione el servicio que necesita.',
-    message: 'Cuéntenos brevemente qué necesita.',
+    name: 'Ingresa tu nombre.',
+    company: 'Ingresa el nombre de tu empresa.',
+    email: 'Ingresa un correo válido, por ejemplo nombre@empresa.cl.',
+    phone: 'Ingresa un teléfono válido.',
+    service: 'Elige el servicio que necesitas.',
+    message: 'Cuéntanos brevemente qué necesitas.',
   };
 
   const validateField = (field) => {
@@ -238,7 +238,7 @@
     e.preventDefault();
     const results = fields.map(validateField);
     if (results.includes(false)) {
-      status.textContent = 'Revise los campos marcados.';
+      status.textContent = 'Revisa los campos marcados.';
       status.classList.add('is-error');
       fields[results.indexOf(false)].focus();
       return;
@@ -256,6 +256,6 @@
     ].filter((l) => l !== null).join('\n');
     const subject = `Solicitud de ${data.service} · ${data.company}`;
     window.location.href = `mailto:contacto@aciertolaboral.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    status.textContent = 'Abrimos su correo con la solicitud lista para enviar.';
+    status.textContent = 'Abrimos tu correo con la solicitud lista para enviar.';
   });
 })();
