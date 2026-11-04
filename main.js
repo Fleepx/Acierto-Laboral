@@ -55,17 +55,21 @@
 
   const statement = document.querySelector('[data-words]');
   if (statement) {
-    const accents = new Set(['rigurosa']);
-    const words = statement.textContent.trim().split(/\s+/);
+    const accents = new Set(['correcta']);
+    const lines = statement.innerHTML.split(/<br\s*\/?>/i).map((line) => line.replace(/<[^>]*>/g, '').trim());
     statement.textContent = '';
-    const spans = words.map((word, i) => {
-      const span = document.createElement('span');
-      span.className = 'w';
-      if (accents.has(word.replace(/[.,]/g, '').toLowerCase())) span.classList.add('accent');
-      span.textContent = word;
-      statement.append(span);
-      if (i < words.length - 1) statement.append(' ');
-      return span;
+    const spans = [];
+    lines.forEach((line, l) => {
+      if (l > 0) statement.append(document.createElement('br'));
+      line.split(/\s+/).forEach((word, i) => {
+        if (i > 0) statement.append(' ');
+        const span = document.createElement('span');
+        span.className = 'w';
+        if (accents.has(word.replace(/[.,]/g, '').toLowerCase())) span.classList.add('accent');
+        span.textContent = word;
+        statement.append(span);
+        spans.push(span);
+      });
     });
 
     let ticking = false;

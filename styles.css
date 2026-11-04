@@ -283,8 +283,8 @@ p { text-wrap: pretty; }
 /* Statement */
 .statement { padding: 128px 0; background: var(--paper); }
 .statement-text {
-  max-width: 960px; margin: 0 auto; text-align: center;
-  font-size: 3.75rem; line-height: 1; font-weight: 700; letter-spacing: -0.03em; color: var(--navy-800);
+  max-width: 1080px; margin: 0 auto; text-align: center; text-wrap: balance;
+  font-size: 3rem; line-height: 1.1; font-weight: 700; letter-spacing: -0.03em; color: var(--navy-800);
 }
 .statement-text .w { color: rgba(14, 31, 69, 0.22); transition: color 0.9s var(--ease); }
 .statement-text .w.on { color: var(--navy-800); }
@@ -444,7 +444,7 @@ p { text-wrap: pretty; }
   .service, .quote, .form { padding: 24px; }
   .service h3 { font-size: 1.5rem; line-height: 2rem; }
   .statement { padding: 96px 0; }
-  .statement-text { font-size: 2.25rem; line-height: 2.5rem; }
+  .statement-text { font-size: 1.875rem; line-height: 2.25rem; }
   .field-row { grid-template-columns: 1fr; }
   .clients { padding: 80px 0; }
   .clients-head { margin-bottom: 40px; }
