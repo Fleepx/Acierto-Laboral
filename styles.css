@@ -184,8 +184,9 @@ p { text-wrap: pretty; }
   -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent); mask-image: radial-gradient(closest-side, #000 60%, transparent);
 }
 .ring-deco { position: absolute; width: var(--ring); height: var(--ring); left: calc(var(--card-w) - var(--ring) / 2); top: calc(var(--lift) - var(--ring) / 2); color: var(--red); pointer-events: none; }
-.ring-deco circle { stroke-dasharray: 880; stroke-dashoffset: 880; transition: stroke-dashoffset 2s var(--ease) 0.2s; }
-.hero-visual.is-visible .ring-deco circle { stroke-dashoffset: 0; }
+.ring-deco circle { stroke-dasharray: 880; stroke-dashoffset: 880; }
+.hero-visual.is-visible .ring-deco circle { animation: ring-draw 2s var(--ease) calc(var(--reveal-delay, 0ms) + 300ms) both; }
+@keyframes ring-draw { from { stroke-dashoffset: 880; } to { stroke-dashoffset: 0; } }
 
 .report {
   position: relative; width: 100%;
@@ -404,6 +405,7 @@ p { text-wrap: pretty; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; }
   .reveal { opacity: 1; transform: none; filter: none; }
+  .ring-deco circle { stroke-dashoffset: 0; }
 }
 
 /* Responsive */

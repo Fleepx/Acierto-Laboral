@@ -35,7 +35,8 @@
         const el = entry.target;
         const delay = n * 120;
         el.style.transitionDelay = `${delay}ms`;
-        el.classList.add('is-visible');
+        el.style.setProperty('--reveal-delay', `${delay}ms`);
+        requestAnimationFrame(() => el.classList.add('is-visible'));
         revealObserver.unobserve(el);
         setTimeout(() => {
           el.classList.remove('reveal');
