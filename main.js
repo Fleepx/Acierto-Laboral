@@ -26,17 +26,18 @@
   }).observe(sentinel);
 
   const reveals = document.querySelectorAll('.reveal');
+  const order = new Map([...reveals].map((el, i) => [el, i]));
   const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
-      revealObserver.unobserve(entry.target);
-    });
+    entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((x, y) => order.get(x.target) - order.get(y.target))
+      .forEach((entry, n) => {
+        entry.target.style.transitionDelay = `${n * 120}ms`;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-  reveals.forEach((el, i) => {
-    el.style.transitionDelay = `${(i % 4) * 80}ms`;
-    revealObserver.observe(el);
-  });
+  reveals.forEach((el) => revealObserver.observe(el));
 
   const navLinks = document.querySelectorAll('.nav-links a');
   const sections = [...navLinks].map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
