@@ -73,8 +73,7 @@
       const rect = statement.getBoundingClientRect();
       const vh = window.innerHeight;
       const start = vh * 0.85;
-      const end = vh * 0.35;
-      const progress = Math.min(1, Math.max(0, (start - rect.top) / (start - end + rect.height * 0.5)));
+      const progress = Math.min(1, Math.max(0, (start - rect.top) / (vh * 0.3 + rect.height)));
       const lit = Math.round(progress * spans.length);
       spans.forEach((s, i) => s.classList.toggle('on', i < lit));
     };
