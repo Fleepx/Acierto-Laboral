@@ -203,6 +203,13 @@ p { text-wrap: pretty; }
 .report-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .verdict { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 9999px; background: #FDECEA; color: var(--red-dark); font-size: 0.875rem; line-height: 1.25rem; font-weight: 600; }
 .verdict .ph { font-size: 1.125rem; }
+.verdict.is-warn { background: #FEF3E2; color: #A15C07; }
+.report-swap { transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); }
+.report.is-swapping .report-swap { opacity: 0; transform: translateY(4px); }
+.report.is-ready .report-bars b::after { transition-duration: 1s; transition-delay: 0s; }
+.report-dots { display: flex; justify-content: center; gap: 8px; }
+.report-dots span { width: 8px; height: 8px; border-radius: 9999px; background: var(--line); transition: background-color 0.7s var(--ease), width 0.7s var(--ease); }
+.report-dots span.on { width: 24px; background: var(--navy-800); }
 .report-sign { font-size: 0.75rem; line-height: 1rem; color: var(--ink-3); }
 
 /* Clients strip */

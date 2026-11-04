@@ -93,6 +93,75 @@
   }
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const reports = [
+    { role: 'Jefe de Operaciones', id: '0147', ok: true, items: [['Liderazgo', 4.2], ['Tolerancia a la presión', 3.8], ['Orientación a resultados', 4.4], ['Trabajo en equipo', 3.5]] },
+    { role: 'Analista Contable', id: '0213', ok: true, items: [['Rigurosidad', 4.6], ['Pensamiento analítico', 4.3], ['Manejo del tiempo', 3.7], ['Comunicación', 3.2]] },
+    { role: 'Ejecutiva Comercial', id: '0298', ok: false, items: [['Orientación al cliente', 4.5], ['Negociación', 4.1], ['Tolerancia a la frustración', 2.9], ['Autonomía', 3.9]] },
+    { role: 'Supervisor de Bodega', id: '0331', ok: true, items: [['Liderazgo', 3.6], ['Apego a normas de seguridad', 4.7], ['Resolución de problemas', 3.9], ['Trabajo en equipo', 4.2]] },
+    { role: 'Asistente Administrativa', id: '0356', ok: false, items: [['Organización', 4.4], ['Atención al detalle', 4.0], ['Adaptación al cambio', 2.8], ['Orientación al servicio', 3.8]] },
+  ];
+
+  const report = document.querySelector('.report');
+  if (report) {
+    const title = report.querySelector('.report-title');
+    const code = report.querySelector('.report-id');
+    const rows = [...report.querySelectorAll('.report-bars li')];
+    const verdict = report.querySelector('.verdict');
+    const verdictIcon = verdict.querySelector('.ph');
+    const verdictText = verdict.querySelector('.verdict-text');
+    [title, code, verdict, ...rows.flatMap((li) => [li.querySelector('span'), li.querySelector('em')])].forEach((el) => el.classList.add('report-swap'));
+
+    const dots = document.createElement('div');
+    dots.className = 'report-dots';
+    dots.setAttribute('aria-hidden', 'true');
+    reports.forEach(() => dots.append(document.createElement('span')));
+    report.append(dots);
+
+    const fill = (r) => {
+      title.textContent = r.role;
+      code.textContent = `N.º ${r.id}`;
+      rows.forEach((li, i) => {
+        const [label, score] = r.items[i];
+        li.querySelector('span').textContent = label;
+        li.querySelector('em').textContent = score.toFixed(1).replace('.', ',');
+        li.querySelector('b').style.setProperty('--v', (score / 5).toFixed(2));
+      });
+      verdict.classList.toggle('is-warn', !r.ok);
+      verdictIcon.className = `ph ${r.ok ? 'ph-seal-check' : 'ph-warning-circle'}`;
+      verdictText.textContent = r.ok ? 'Recomendable para el cargo' : 'Recomendable con observaciones';
+    };
+
+    let index = 0;
+    try {
+      const last = Number(localStorage.getItem('al-report'));
+      index = Number.isInteger(last) && last >= 0 ? (last + 1) % reports.length : 0;
+      localStorage.setItem('al-report', String(index));
+    } catch (e) { index = 0; }
+
+    const markDots = () => [...dots.children].forEach((d, i) => d.classList.toggle('on', i === index));
+    fill(reports[index]);
+    markDots();
+    setTimeout(() => report.classList.add('is-ready'), 2200);
+
+    const next = () => {
+      index = (index + 1) % reports.length;
+      markDots();
+      if (reduceMotion.matches) { fill(reports[index]); return; }
+      report.classList.add('is-swapping');
+      setTimeout(() => {
+        fill(reports[index]);
+        report.classList.remove('is-swapping');
+      }, 350);
+    };
+
+    let timer = null;
+    let inView = false;
+    const start = () => { if (!timer && inView && !document.hidden) timer = setInterval(next, 5000); };
+    const stop = () => { clearInterval(timer); timer = null; };
+    new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; if (inView) start(); else stop(); }).observe(report);
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+  }
   const faqItems = [...document.querySelectorAll('.faq details')];
   const faqTiming = { duration: 520, easing: 'cubic-bezier(0.32, 0.72, 0, 1)' };
 
