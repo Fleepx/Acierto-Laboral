@@ -28,21 +28,28 @@
   const reveals = document.querySelectorAll('.reveal');
   const order = new Map([...reveals].map((el, i) => [el, i]));
   const revealObserver = new IntersectionObserver((entries) => {
-    entries
+    const batch = entries
       .filter((entry) => entry.isIntersecting)
-      .sort((x, y) => order.get(x.target) - order.get(y.target))
-      .forEach((entry, n) => {
-        const el = entry.target;
-        const delay = n * 120;
-        el.style.transitionDelay = `${delay}ms`;
-        el.style.setProperty('--reveal-delay', `${delay}ms`);
-        requestAnimationFrame(() => el.classList.add('is-visible'));
-        revealObserver.unobserve(el);
-        setTimeout(() => {
-          el.classList.remove('reveal');
-          el.style.transitionDelay = '';
-        }, delay + 1000);
-      });
+      .map((entry) => entry.target)
+      .sort((x, y) => order.get(x) - order.get(y));
+    const delays = new Map();
+    let step = 0;
+    batch.forEach((el) => { if (!el.dataset.revealWith) delays.set(el, step++ * 120); });
+    batch.forEach((el) => {
+      let delay = delays.get(el);
+      if (delay === undefined) {
+        const ref = document.querySelector(el.dataset.revealWith);
+        delay = delays.has(ref) ? delays.get(ref) : 0;
+      }
+      el.style.transitionDelay = `${delay}ms`;
+      el.style.setProperty('--reveal-delay', `${delay}ms`);
+      requestAnimationFrame(() => el.classList.add('is-visible'));
+      revealObserver.unobserve(el);
+      setTimeout(() => {
+        el.classList.remove('reveal');
+        el.style.transitionDelay = '';
+      }, delay + 1000);
+    });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
   reveals.forEach((el) => revealObserver.observe(el));
 
