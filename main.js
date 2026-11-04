@@ -143,6 +143,22 @@
     markDots();
     setTimeout(() => report.classList.add('is-ready'), 2200);
 
+    const lockHeight = () => {
+      report.style.minHeight = '';
+      let tallest = 0;
+      reports.forEach((r) => { fill(r); tallest = Math.max(tallest, report.offsetHeight); });
+      fill(reports[index]);
+      report.style.minHeight = `${tallest}px`;
+    };
+    let lastWidth = 0;
+    new ResizeObserver(([entry]) => {
+      const width = Math.round(entry.contentRect.width);
+      if (width === lastWidth) return;
+      lastWidth = width;
+      lockHeight();
+    }).observe(report.parentElement);
+    if (document.fonts) document.fonts.ready.then(lockHeight);
+
     const next = () => {
       index = (index + 1) % reports.length;
       markDots();
