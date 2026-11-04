@@ -111,12 +111,6 @@
     const verdictText = verdict.querySelector('.verdict-text');
     [title, code, verdict, ...rows.flatMap((li) => [li.querySelector('span'), li.querySelector('em')])].forEach((el) => el.classList.add('report-swap'));
 
-    const dots = document.createElement('div');
-    dots.className = 'report-dots';
-    dots.setAttribute('aria-hidden', 'true');
-    reports.forEach(() => dots.append(document.createElement('span')));
-    report.append(dots);
-
     const fill = (r) => {
       title.textContent = r.role;
       code.textContent = `N.º ${r.id}`;
@@ -138,30 +132,11 @@
       localStorage.setItem('al-report', String(index));
     } catch (e) { index = 0; }
 
-    const markDots = () => [...dots.children].forEach((d, i) => d.classList.toggle('on', i === index));
     fill(reports[index]);
-    markDots();
     setTimeout(() => report.classList.add('is-ready'), 2200);
-
-    const lockHeight = () => {
-      report.style.minHeight = '';
-      let tallest = 0;
-      reports.forEach((r) => { fill(r); tallest = Math.max(tallest, report.offsetHeight); });
-      fill(reports[index]);
-      report.style.minHeight = `${tallest}px`;
-    };
-    let lastWidth = 0;
-    new ResizeObserver(([entry]) => {
-      const width = Math.round(entry.contentRect.width);
-      if (width === lastWidth) return;
-      lastWidth = width;
-      lockHeight();
-    }).observe(report.parentElement);
-    if (document.fonts) document.fonts.ready.then(lockHeight);
 
     const next = () => {
       index = (index + 1) % reports.length;
-      markDots();
       if (reduceMotion.matches) { fill(reports[index]); return; }
       report.classList.add('is-swapping');
       setTimeout(() => {
