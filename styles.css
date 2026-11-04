@@ -181,7 +181,7 @@ p { text-wrap: pretty; }
   background-size: 24px 24px; opacity: 0.22;
   -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent); mask-image: radial-gradient(closest-side, #000 60%, transparent);
 }
-.ring-deco { position: absolute; width: var(--ring); height: var(--ring); left: calc(var(--card-w) - var(--ring) / 2); top: calc(var(--lift) - var(--ring) / 2); color: var(--red); transform: rotate(180deg); pointer-events: none; }
+.ring-deco { position: absolute; width: var(--ring); height: var(--ring); left: calc(var(--card-w) - var(--ring) / 2); top: calc(var(--lift) - var(--ring) / 2); color: var(--red); transform: rotate(170deg); pointer-events: none; }
 .ring-deco circle { stroke-dasharray: 101; stroke-dashoffset: 101; transition: stroke-dashoffset 2s var(--ease) 0.2s; }
 .hero-visual.is-visible .ring-deco circle { stroke-dashoffset: 0; }
 
