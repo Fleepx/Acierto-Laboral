@@ -1,0 +1,19 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "scripts": {
+    "test:e2e": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fleepx/Acierto-Laboral.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Fleepx/Acierto-Laboral/issues"
+  },
+  "homepage": "https://github.com/Fleepx/Acierto-Laboral#readme",
+  "private": true,
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}
